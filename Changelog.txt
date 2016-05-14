@@ -1,4 +1,4 @@
-# Changlog for quiz_meet.py  (b  indicates beta will stay beta for a time)
+# Changlog for quiz_meet.py  (b  indicates beta will stay beta for a time )
 .1 
 - Intial release
 
