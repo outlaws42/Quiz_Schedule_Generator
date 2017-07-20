@@ -1,10 +1,13 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-import random
-import sys, os
-import pickle
-import configparser
-
+try:
+    import random
+    import sys, os
+    import pickle
+    import configparser
+except(ImportError) as e:
+    logging.info('generate_rand imports  ' + str(e))
+    
 class ScheduleGen(object):
     def __init__(self):
 
@@ -17,92 +20,96 @@ class ScheduleGen(object):
         """
             read python dict back from the file. If it doesn't exist then it creates it.
         """
-        if os.name == 'posix':
-            with open(self.get_resource_path('teams.qs'), 'rb') as file_:
-                self.teams_present = pickle.load(file_)
-        elif os.name == 'nt':
-            with open('teams.qs', 'rb') as file_:
+        with open(self.get_resource_path('teams.qs'), 'rb') as file_:
                 self.teams_present = pickle.load(file_)
           
     def team_info(self):
-        self.teams = [x for x in self.teams_present.values()]  # Creates a list of teams from  the values of the dictionary teams_present
-        self.rooms = int(len(self.teams) / 3)  # sees how many teams then divides it by 3 and returns a integer to figure the amount of rooms needed
-        self.teams_capacity = self.rooms * 3  # takes the amount rooms we have and finds how many teams can quiz at once
+        self.teams = [x for x in self.teams_present.values()]
+        self.rooms = int(len(self.teams) / 3)  
+        self.teams_capacity = self.rooms * 3 
 
-    def quiz_breaks(self, quizzes, positions,
-                    start=0):  # takes a combined list of possible break teams and groups them 1 or 2 sub list
-        self.quizzes = quizzes
-        self.positions = positions
-        self.start = start
-        while self.start <= len(self.quizzes) - self.positions:
-            yield self.quizzes[self.start:self.start + self.positions]
-            self.start += self.positions
+    def group_list_items(self, list_, positions,start=0):
+        """
+            takes a list and groups them into sub list in the amount of positions
+        """
+        while start <= len(list_) - positions:
+            yield list_[start:start + positions]
+            start += positions
 
-    def random_list(self, list_):  # Randomizes the list
+    def random_list(self, list_):
+        """
+            Randomizes a list
+        """
         self.list_ = list_
-        for i in self.list_:
+        for iten in range(1):
             rand = random.sample(self.list_, len(self.list_))
-            return rand
-
+        return rand
+        
+    def reverse_sublist(self,list_):
+        for i in range(0,len(list_),2):
+            list_[i][:] = list_[i][::-1]
+        return list_
+        
     # Create lists  for teams
     def quiz_list(self):
-        self.random_teams = self.random_list(
-            self.teams)  # randomize list before creating quiz lists for the whole schedule
         self.quiz = []
         self.quiz_random = []
-        for i in range(self.quiz_day + 5):
-            i = self.random_teams[:]
-            p = []
-            self.quiz.append(i)
-            self.quiz_random.append(p)
+        for count in range(self.quiz_day + 5):
+            temp_list = self.teams[:]  
+            empty_sublist = []
+            self.quiz.append(temp_list)
+            self.quiz_random.append(empty_sublist)
 
         if len(self.teams) > self.teams_capacity:
-            breakr = self.quiz[self.quiz_day] + self.quiz[self.quiz_day] + self.quiz[self.quiz_day] + self.quiz[
-                self.quiz_day] + self.quiz[self.quiz_day]  # create a long list to create the break list from
-            if len(self.teams) - self.teams_capacity > 1:  # condition to see if we have 1 or 2 break teams
-                self.break_ = list(
-                    self.quiz_breaks(breakr, 2))  # Create the break list, with 2 quiz break teams in their sub list
+            # create a long list to create the break list from
+            breakr = [items for sublist in self.quiz for items in sublist]
+            #print(breakr)
+            # condition to see if we have 1 or 2 break teams
+            if len(self.teams) - self.teams_capacity > 1:
+                # Create the break list, with 2 quiz break teams in their sub list 
+                self.break_ = list(self.group_list_items(breakr, 2))
+                # Reverse every other sublist
+                self.quiz = self.reverse_sublist(self.quiz)
             else:
-                self.break_ = list(
-                    self.quiz_breaks(breakr, 1))  # Create the break list, with 1 quiz break team in its sub list
-            for i in range(self.quiz_day + 5):
-                p = [x for x in self.quiz[i] if x not in self.break_[i]]  # Remove break teams from the quiz
-                self.quiz_random[i] = self.random_list(p)  # randomize the lists.
+                # Create the break list, with 1 quiz break team in its sub list
+                self.break_ = list(self.group_list_items(breakr, 1))
+                # Reverse every other sublist
+                self.quiz = self.reverse_sublist(self.quiz)
+            for item in range(self.quiz_day + 5):
+                # Remove break teams from the quiz
+                no_break = [x for x in self.quiz[item] if x not in self.break_[item]]
 
+                #random_first_pass = self.random_list(no_break)
+                #self.quiz_random[item] = self.random_list(random_first_pass)
+
+                
+                self.quiz_random[item] = self.random_list(no_break)
         else:
-            for i in range(self.quiz_day + 5):
-                self.quiz_random[i] = self.random_list(self.quiz[i])  # randomize list if there  are no break teams
-
+            # Reverse every other sublist
+            self.quiz = self.reverse_sublist(self.quiz)
+            print('self.quiz  ' + str(self.quiz)) 
+            for item in range(self.quiz_day + 5):
+                # randomize list if there  are no break teams
+                self.quiz_random[item] = self.random_list(self.quiz[item])  
 
     def get_resource_path(self,rel_path):
-        dir_of_py_file = os.path.dirname(__file__)
+        dir_of_py_file = os.path.dirname(sys.argv[0])
         rel_path_to_resource = os.path.join(dir_of_py_file, rel_path)
         abs_path_to_resource = os.path.abspath(rel_path_to_resource)
         return abs_path_to_resource
 
     def settings(self):
         config = configparser.SafeConfigParser()
-        if os.name == 'posix':
-            config.read(self.get_resource_path('settings.cfg'))
-        elif os.name == 'nt':
-            config.read('settings.cfg')
+        config.read(self.get_resource_path('settings.cfg'))
         self.header_title = config.get('schedule', 'header_title')
         self.header_on = config.getboolean('schedule', 'header_on')
-        #self.header_on_b = config.get('schedule', 'header_on')
         self.quiz_morn = config.getint('schedule', 'quizes_morning')
         self.quiz_after = config.getint('schedule', 'quizes_after')
-        self.font_title_fc =  config.get('schedule','title_font_face')
-        self.font_title_sz =  config.get('schedule','title_font_size')
-        self.font_head_fc =  config.get('schedule','head_font_face')
-        self.font_head_sz =  config.get('schedule','head_font_size')
-        self.font_abr_fc =  config.get('schedule','abr_font_face')
-        self.font_abr_sz =  config.get('schedule','abr_font_size')
-        self.date_update = "08/10/2016"
+        self.quiz_start_time = config.get('schedule', 'quiz_start')
+        self.quiz_lunch_length = config.getint('schedule', 'lunch_length')
+        self.date_update = '08/10/2016'
         self.quiz_day = self.quiz_morn + self.quiz_after
 
-
-    def call_excel(self):
-        self.excel = excel.ExportXlsx()
     
 if __name__=='__main__':
     app = ScheduleGen()

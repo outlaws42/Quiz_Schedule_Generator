@@ -1,8 +1,16 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-import xlsxwriter
-import generate_rand as rand
+try:
+    import logging
+    import xlsxwriter
+except(ImportError) as e:
+    logging.info('xlsx import  ' + str(e))
 
+# External imports
+try:
+    import generate_rand as rand
+except(ImportError) as e:
+    logging.info('generate_rand from xlsx_export  ' + str(e))
 
 class ExportXlsx(object):
     def __init__(self):
@@ -25,7 +33,7 @@ class ExportXlsx(object):
         
 
     def excel_export(self):  # Requires xlsxwriter module to work
-            #file_ = input("Select a name for your schedule (No spaces):  ") or 'schedule'
+            #file_ = input('Select a name for your schedule (No spaces):  ') or 'schedule'
             workbook = xlsxwriter.Workbook(self.path)
             worksheet = workbook.add_worksheet('Meet')
             worksheet.set_landscape()
@@ -34,28 +42,28 @@ class ExportXlsx(object):
             #worksheet.set_print_scale(75)
             worksheet.center_horizontally()
             worksheet.set_paper(1)
-            merge_format = workbook.add_format({'font_name': self.tms.font_head_fc,
-                                                'font_size': self.tms.font_head_sz,
+            merge_format = workbook.add_format({'font_name': 'Arial-Bold',
+                                                'font_size': 11,
                                                 'border': 1,
                                                 'align': 'center',
                                                 'valign': 'vcenter',
                                                 })
             #merge_format.set_font_name(self.tms.font_head_fc)
-            lunch_format = workbook.add_format({'font_name': self.tms.font_head_fc, 'align': 'center', 'valign': 'vcenter',})
-            cell_format = workbook.add_format({'font_name': self.tms.font_abr_fc,
-                                               'font_size': self.tms.font_abr_sz,
+            lunch_format = workbook.add_format({'font_name': 'Arial-Bold', 'align': 'center', 'valign': 'vcenter',})
+            cell_format = workbook.add_format({'font_name': 'Arial',
+                                               'font_size': 11,
                                                'border': 1,
                                                'align': 'center',
                                                'valign':'vcenter',
                                                })
 
-            title_format = workbook.add_format({'font_name': self.tms.font_title_fc,
-                                                'font_size': self.tms.font_title_sz,
+            title_format = workbook.add_format({'font_name': 'Arial-Bold',
+                                                'font_size': 18,
                                                 'align': 'center',
                                                 'valign':'vcenter'
                                                 })
-            date_format = workbook.add_format({'font_name': self.tms.font_head_fc,
-                                                'font_size': self.tms.font_head_sz,
+            date_format = workbook.add_format({'font_name': 'Arial-Bold',
+                                                'font_size': 11,
                                                 'valign': 'vcenter'
                                                 })
             
@@ -95,19 +103,37 @@ class ExportXlsx(object):
             #worksheet.merge_range('C2:M2', ' %s' % self.date_message, date_format)  # the header message
 
             # Morning quiz times and lunch
-            start_in = '09:30'  # start time
+            start_in = self.tms.quiz_start_time  # start time
             # separate hour from minute.  Create a hour and min list
             start_list_h = list(start_in)  # convert to list
             start_list_m = list(start_in)  # convert to list
             start_list_m[:-2] = []  # slice list for minutes
             start_list_h[2:] = []  # slice list for hour
-            start_hour = "".join(start_list_h)  # join back to a string
-            start_min = "".join(start_list_m)  # join back to a string
+            start_hour = ''.join(start_list_h)  # join back to a string
+            start_min = ''.join(start_list_m)  # join back to a string
             hour = int(start_hour)
-            if start_min == '30':
+            if start_min == '00':
+                hour = int(start_hour) + 1
+                count = 3
+                worksheet.write('A6', str(start_hour) + ':' + '00' + ' AM', cell_format)
+                worksheet.write('A8', str(start_hour) + ':' + '20' + ' AM', cell_format)
+                worksheet.write('A10', str(start_hour) + ':' + '40' + ' AM', cell_format)
+                row = 11
+            elif start_min == '20':
+                hour = int(start_hour) + 1
+                count = 2
+                worksheet.write('A6', str(start_hour) + ':' + '20' + ' AM', cell_format)
+                worksheet.write('A8', str(start_hour) + ':' + '40' + ' AM', cell_format)
+                row = 9
+            elif start_min == '30':
                 hour = int(start_hour) + 1
                 count = 1
                 worksheet.write('A6', str(start_hour) + ':' + '30' + ' AM', cell_format)
+                row = 7
+            elif start_min == '40':
+                hour = int(start_hour) + 1
+                count = 1
+                worksheet.write('A6', str(start_hour) + ':' + '40' + ' AM', cell_format)
                 row = 7
             else:
                 count = 0
@@ -149,26 +175,58 @@ class ExportXlsx(object):
             # Afternoon quiz times
             # separate hour from minute. Create a hour and min list
             lunch_in = str(h) + ':' + str(lunchr)
+            print(lunch_in)
             lunch_list_h = list(lunch_in)  # convert to list
             lunch_list_m = list(lunch_in)  # convert to list
 
             lunch_list_m[:-2] = []  # slice list for minutes
             lunch_list_h[2:] = []  # slice list for hour
-            lunch_hour = "".join(lunch_list_h)  # join back to a string
-            lunch_min = "".join(lunch_list_m)  # join back to a string
-            after_start = int(lunch_hour) + 1
+            lunch_hour = ''.join(lunch_list_h)  # join back to a string
+            lunch_min = ''.join(lunch_list_m)  # join back to a string
+            lunch_length = self.tms.quiz_lunch_length
+            if lunch_length > 40: 
+                after_start = int(lunch_hour) + 1
+            else:
+                lunch_min = int(lunch_min) + int(lunch_length)
+                if lunch_min >= 60:
+                    lunch_min = int(lunch_min) - 60
+                    after_start = int(lunch_hour) + 1
+                else:
+                    after_start = int(lunch_hour)
+                print(lunch_min)
+                print(after_start)
 
             if int(after_start) != 13:
-                if int(after_start) >= 12:
-                    count = 1
-                    row = (int(self.tms.quiz_morn) * 2) + 7
-                    worksheet.write(row, col, str(after_start) + ':' + str(lunch_min) + ' PM', cell_format)
-                    row += 2
+                row = (int(self.tms.quiz_morn) * 2) + 7
+                if int(after_start) >= 11:
+                    if int(lunch_min) == 00:
+                        count = 0
+                        for i in range(0,60,20):
+                            min_start = int(lunch_min)
+                            min_start += i
+                            count += 1
+                            if i == 0:
+                                worksheet.write(row, col, str(after_start) + ':' + str(min_start) + '0 PM', cell_format)
+                            else:
+                                worksheet.write(row, col, str(after_start) + ':' + str(min_start) + ' PM', cell_format)
+                            row += 2
+                    else:
+                        count = 1
+                        worksheet.write(row, col, str(after_start) + ':' + str(lunch_min) + ' PM', cell_format)
+                        row += 2
+                        
                     if int(lunch_min) == 20:
                         lunch_min = int(lunch_min) + 20
                         worksheet.write(row, col, str(after_start) + ':' + str(lunch_min) + ' PM', cell_format)
                         row += 2
                         count += 1
+                        
+                    elif int(lunch_min) == 30:
+                        lunch_min = int(lunch_min) + 20
+                        worksheet.write(row, col, str(after_start) + ':' + str(lunch_min) + ' PM', cell_format)
+                        row += 2
+                        count += 1
+                        
                 else:
                     count = 0
                     row = (int(self.tms.quiz_morn) * 2) + 7
@@ -181,9 +239,9 @@ class ExportXlsx(object):
                 for m in range(0, 60, 20):
                     count += 1
                     if m < 10:
-                        worksheet.write(row, col, str(h) + ':' + str(m) + '0 PM', cell_format)
+                        worksheet.write(row, col, '0' + str(h) + ':' + str(m) + '0 PM', cell_format)
                     else:
-                        worksheet.write(row, col, str(h) + ':' + str(m) + ' PM', cell_format)
+                        worksheet.write(row, col, '0' + str(h) + ':' + str(m) + ' PM', cell_format)
                     row += 2
 
                     if count >= int(self.tms.quiz_after):
@@ -242,7 +300,7 @@ class ExportXlsx(object):
 
                 # Populate the break teams in the afternoon
                 row = (self.tms.quiz_morn * 2) + 7
-                for i in range(self.tms.quiz_after, self.tms.quiz_after * 2):
+                for i in range(self.tms.quiz_morn, self.tms.quiz_day):
                     if self.tms.rooms == 5:
                         col = 21
                     elif self.tms.rooms == 4:
@@ -277,7 +335,7 @@ class ExportXlsx(object):
             index_ = 0
             for n in range(self.tms.rooms):  # The rooms layer this many
                 row = (self.tms.quiz_morn * 2) + 7
-                for i in range(self.tms.quiz_after, self.tms.quiz_after * 2):  # the afternoon or # of quizzes layer
+                for i in range(self.tms.quiz_morn, self.tms.quiz_day):  # the afternoon or # of quizzes layer
                     col = colum
                     for item in (self.tms.quiz_random[i][index_:index_ + 3]):
                         worksheet.write(row, col, item, cell_format)
