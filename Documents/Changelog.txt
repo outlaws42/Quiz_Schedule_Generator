@@ -1,0 +1,75 @@
+Even last number is a stable release example: 0.5.0
+Odd last number is a beta release example: 0.5.5
+0.5.0 (intial release)
+
+0.6.0
+Added Icon
+added relative path info
+Centered text in columns
+Centered main window in display
+Added logo image
+Added about dialog
+Added menu bar
+Added images on the buttons and removed text
+Added tool tips to the main window buttons
+Added to open schedule in default app (tested in linux(Troy), WindowsXP with excel viewer)
+added settings dialog
+
+0.7.0
+added settings for amount of quizes (morning and afternoon)
+added morning and afternoon quiz amount to schedule
+fixed schedule so when you add quizes  it will adjust team legend
+fixed schedule so when you made morning and afternoon quizes quantiy to much different doesn't give out of range error
+fixed path to use relative path on all saved files. except schedule this is user defined.
+
+0.8.0
+removed print statements
+added ability to log errors
+added try statement to imports with error logging
+added  3 font settings title,header/legend, abr
+cleaned up code
+added icon call to about dialog
+
+0.8.5.1
+fixed spelling errors
+
+0.9.0
+fixed so dialogs popup centered on Windows
+fixed file path logic so it works correctly on Windows exe
+
+1.0.0
+Added documentation
+
+1.1.0
+Added export to pdf
+removed font selection
+
+1.1.5
+Fixed spacing issues with pdf file
+Fixed spelling and punctuation documentatio
+Added title to pdf file
+
+1.2.0
+Added start time adjustment
+Fixed spacing on settings dialog
+Condensed code
+
+1.2.5
+Improved team schedule generation
+Added restrictions for adding,removing and editing teams
+Added restriction of the amount of teams that can be added to 17 (This keeps the schedule at one sheet)
+Limit Team abbreviations to 3 characters
+
+1.2.6
+Fixed error while generating the schedule in certain situations
+
+1.3.0
+Improved edit team so it won't create a duplicate team abbreviation.
+Fixed some documentation problems
+
+1.3.5
+Fixed a issue with the break teams not being in order
+Fixed Generate PDF when generating with 7 quizzes.
+Fixed and updated documentation.
+Added settings option for lunch length 
+

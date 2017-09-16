@@ -1,0 +1,367 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>QSG_Docs</title>
+	<meta name="generator" content="Zim 0.65">
+	<meta name="viewport" content="width=device-width">
+	<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:300&subset=latin,greek,latin-ext' rel='stylesheet' type='text/css'> -->
+	<![if !IE]>
+	<!-- comment out for IE since it spams the user with warnings -->
+	<script type='text/javascript' src='http://code.jquery.com/jquery-1.7.1.js'></script>
+	<script type='text/javascript'>
+		$(window).load(function(){$("#navigation").height( $("#content").height()+65 );});
+	</script>
+	<![endif]>
+	<style>
+		body, html {
+			height:100%;
+			font-family:'Open Sans', sans-serif;
+			line-height:1.5em;
+			font-weight:300;
+			background-color:#FAFAFA;
+			text-rendering:geometricPrecision;
+			margin:0;
+			padding:0;
+		}
+		.wrapper {
+			height:100%;
+			position:relative;
+		}
+		#navigation {
+			background-color:#F3F3F3;
+			display:inline-block;
+			border-right:1px solid #EAEAEA;
+			padding-right:65px;
+			padding-top:65px;
+			padding-left:25px;
+			position:relative;
+			float:left;
+			min-height:100%;
+		}
+		#content {
+			float:left;
+			display:inline-block;
+			position:absolute;
+			max-width:960px;
+			padding:65px;
+		}
+		#navigation ul {
+			margin-top:0;
+			margin-bottom:0;
+			padding-left:40px;
+		}
+		#navigation li {
+			list-style-type:none;
+		}
+		#navigation a {
+			text-decoration:none;
+			color:gray;
+		}
+		#navigation strong {
+			color:#4E9A06;
+			font-weight:400;
+		}
+		#navigation a:hover {
+			text-decoration:underline;
+		}
+		#content h1:nth-child(1) {
+			margin-top:0;
+		}
+		h1,h2,h3,h4,h5,h6 {
+			color:#4E9A06;
+			font-weight:300;
+			margin-bottom: 0;
+		}
+		p {
+			margin-top: 0;
+		}
+		#content a {
+			color:#CE5C00;
+		}
+		#content a {
+			text-decoration: none;
+		}
+		#content a:hover {
+			text-decoration: underline;
+		}
+		#content a:active {
+			text-decoration: underline;
+		}
+		#content strike {
+			color: grey;
+		}
+		#content u {
+			text-decoration: none;
+			background-color: yellow;
+		}
+		#content tt {
+			color: #2e3436;
+		}
+		#content pre {
+			color: #2e3436;
+			margin-left: 20px;
+		}
+		.backlinks {
+			color:gray;
+		}
+		hr.footnotes {
+			width: 20%;
+			margin-left: 0;
+		}
+		@media print{
+			#navigation{
+				background-color:#FFF;
+			}
+		}
+
+		span.zim-tag {
+			color: #ce5c00;
+		}
+		div.zim-object {
+			border-style:solid;
+			border-width:1px;
+		}
+
+		.checked-box {list-style-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAANOgAADMQBiN+4gQAAAAd0SU1FB9gKGQ8sMEGsKGkAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAEBUlEQVRIx62V22tdRRTGf7Nn73P2ybntnNOe3NqkPTGgLTVUUZF6QatSLOKTPgqCIqLgQ0H/A1sQQbBYCBb1QfAxiC8tSO1FqHkwJVKtjdTGNraUmObsc9nXmfGh7cGYpM1D5nHWzPetteZb3wg2eB2YqYm4zSadsMtoboiNBH/3TE0awx6j+MRoxoTg/IYRvP19TQrJS0bzhdHGSyKFkLTtjSKwMjyiEz43ynhtP6bdjBCWyFobAf7eT7VhNF/q1FRbjYjmUohlCVPwnB+6FUxMTJipqSmUUhhjEGKd3bMT4ks/Y6oLBK2Yth8hHYtCJXOix7Nf7xLMzc0xOzvLzp078TyPNE3viW3QJPXzhNWbxFFKHCmMhoLn/FHodd48vGfhapdAacXQlkFK5dL6wIUm6fuTZPuvqDQhaMUYYyiVyuQr6rXDexYuAdi3tSv1ZJNs/R/CaszzT+1na88uXFnCEnJVgivBNN8uTJKmHQI/ptOOcXNZzMz9mOqFs90OHpipWcYwlo5P4ebnuOkrvr5wgrH+h3im7y36MzuwRXYZeKha/OhP0EkadFoxQSdGSotedR/+XwMc2XvKdNUFOFqZx6LKZWIiwjgkikNmLp/hm8sH+K1zjFTHXfBYdTi+eJArzXM0GxFxoBDCopLvo/fqEwi1XPkWkGqjFo2TgB1jOYZUKZTS/D1/ncmLh7jon0IbRWoiTi59ymzzJEEQE3cStNZsGxqlfPE57MBbOR8fP3hDGalOO9fq2DlBvmZw8xa2IxACGn6TydlD/O6f5OzSV/zif0cYhLQaEXGkKBbz7Ov/AOlXV1cxgBJRI3fuSTrpTawt18kWIZN1CFuaONI0w0WOXfsI43YIggh/KUSlhqxrMz74AkOZcWBm9QkH+Gw8NDLuITi+m0yzhluSyJzBLcpblUhFxywSRAEtPwQjsKVN30CNh0uvYuOubSHLtN3J0TO1j0pmBNuFbFWRK0gyPRZpktL2I5JQkclKakNlnh54g6ocvevUr/Ai2a7wineEkcJupA3S1Wg0nVZM2E6wbEF5U5G9Q++wI7sfR7h3N8HVNstykBfzH+KJEZwiWD0aIwxCgJ0R1Mu7GXOeJSuK93bZtQIle4D9pUNU5DC5jEsu55AvZakM5NicGyEj8uuz8bUCQgj67QfY671P3vEoeC69gy695U1U7NG7XV0pUwBjDJa1/JJlWWxzHuflzQe5FJ/GsgUVuZ2t8lEkTvfc0aNHb72flBhjVicQQqCUuvM3/M+WDVguWBrMVdDXEGZlBVEUrVCU9d9s5+fnaTQa2PZyPxEIhJaI1EEoZwX4ncynp6fXrmB4eJjR0VFarRbNZnP9P9rt9gohqNVq1Ov1ZbF/AZGev3hLJ2/zAAAAAElFTkSuQmCC)}
+		.xchecked-box {list-style-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAANOgAADMQBiN+4gQAAAAd0SU1FB9gKGQ8bDYnDxEwAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAEK0lEQVRIx9WVS2hTWRjHf/eR3CY1nbxMH2YiZRQS6qO13YlMVxY3SnVcuNIBFezGpSADLoQqLu1sHJCqdCFSXFpw4YOCSH3BtFqttTNamabX3DS5bfO6uffMoglja3RGcDMHzuac7/z/53++//cd+L8P6VuCPQYZ8ADNgBd4J31DcDcQs+GnHByRocEDv0kfBSjAOlYCs11Q+gpwDegS8LMJ+3QIK0ATzEhV8Odnz5bzw8P4dJ25aJQ/WlvJ1df/K7hSLtOcTNI+Pk69rpMTgqIQhCDvh1/VSpw79+gRrRMTmLZNezLJJsPg+a5dmOEwQlFqg1sWG16/Jv7sGWXDwBACFQjC9HcwIMONKkGp4PGAJGEDS0IQmZlhnWnye3c3eiyGo6qr3WHbrJ+dJf7gAXI6zSIr72T7/fgzmT4FHnTBsgrQBfYvTU0km5vxz86iADnAm0rRPTWFt7cXZccOJJcLAGHb2K9ekT93jmwmwwdAAFpjI6Ntbfxw5879ag7l6o1sr5eHHR3IsRgeQK/M4sQE+YEB7JcvEY6zAj45SWFgAPPxYwzHoQxIkQjTPT0kIxE+Noj8sexFn4/xnh58iQTeSpHkHAdrbIzi0BCOrmNPTpK/eJHM3bt8sCyKQCiR4NWePWSiUZw1+ZLXJm4pFKLhzBlCsRh2RUXacVgeGaF47RrL58+zcP8+RrmMkCQinZ1EL1zAjERqmkH+tLYl1G3bCJw4QUjT0IA0MJfLMX/5MqmHD0nZNiUgtGULG/r7ccXjINWuWbnmqsuFu7sb/4EDNLlcBIEioNs2KUAFGmMxmk6dQm1tRZI+3xBqEkiShBQOox05Ql1nJ26gvuIUAWiKQnj/ftStW5Fk+YuF+NldsbBA4cYN9KdPmaso8Fc62ZJtk7l1C2t0FGdxESHE1xE4hkHh6lX0oSHSpRIewC/LrPf7CSgKNpCamkI/fZr8pUuIZBIcpyaBunahPp1mub+fDyMjGKUSChCsq6Nh717q9u2jbnSU0uAgRrFIwTThyhUCqRS+hgZKLS1fJvDm87SNjZGcnsYUAjcQ8vsJ9/Xh7u1FDgRQN20iks3iDA+zZFmYhQLqzZtsj8WY3L0baY2Sf55ICCKpFHUzM2SEQAJCHg+hY8fQDh5EDgRWDoRC1J88SePRo2geD0XAcBy8b98Sv3ePYDZbbf2rFQjLIphMsmDbaEBQVQkePox26BCSz7e6i4bDrDt+nGYhmBscpFAskheC4Js3bPR4qHphFYEnlcI7P4/jdqNpGu8TCe4oCsXr1z//F2ga3+/cSfTJE0qmSVYIsKzaOZDcbjKyzFIiwfvt21kMBLA07YsetzWNd+3tLLW0sH5igvT8PH9Go/z44kX+E4LGjg7GDYOcy4XlOEgLC//5P/5LCFzxOPLmzWyIx+m6fduu7v0NVGqyTSycKksAAAAASUVORK5CYII=)}
+		.unchecked-box {list-style-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAANOgAADMQBiN+4gQAAAAd0SU1FB9gKGQ8qAt8h3m8AAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAA60lEQVRIx+2VsQqDMBRF70sCLg5OLoKgjk7+lJ/hh+STXBwcnRz8ArMEkrxOFktbaC3tULzTg5e8k5vADXDq70VbobXmvu/hvQczg4heHrJfXxQFuq67blZbMc8zpmlCXddIkgTOuZcBUko45zCOI6y1Nz2xFSEEZFmGOI7fGg4A3nsQEZqmuXOu9jallACAtm3fvmutNaIoAjM/dkBECCF89KCbk4eAb+kEnIAT8EsAM0OIz3hSyrssUvss8t5fg+uIrLXPs0gIgWVZYIyBUurQyYdheO4gz3NUVQVjDNZ1PfSjpWmKsixvehfB9GBZ3NndrgAAAABJRU5ErkJggg==)}
+		ul {list-style-image: none}
+		/* ul rule needed to reset style for sub-bullets */
+
+	</style>
+</head>
+
+<body>
+	<div class="wrapper">
+		<div id="navigation"> <ul>
+<li><a href="#Home" title="Home" class="page">Home</a></li>
+<li><a href="#Main" title="Main" class="page">Main</a></li>
+<li><a href="#Schedule Generate" title="Schedule Generate" class="page">Schedule Generate</a></li>
+<li><a href="#Settings" title="Settings" class="page">Settings</a></li>
+</ul>
+ </div>
+		<div id="content">
+			<h1>Quiz schedule Generator <a name='Home'></a></h1>
+
+			
+<br>
+
+<table>
+<thead><tr>
+  <th align="left">Category</th>
+  <th align="left">Info</th>
+</tr></thead>
+<tr>
+  <td align="left">Authors:</td>
+  <td align="left">Troy Franks</td>
+</tr>
+<tr>
+  <td align="left">Date:</td>
+  <td align="left">3/20/2017</td>
+</tr>
+<tr>
+  <td align="left">Version:</td>
+  <td align="left">1.3.5</td>
+</tr>
+</table>
+
+<p>
+Copyright © 2017
+</p>
+
+<h3>General synopsus</h3>
+
+<p>
+This program takes a list of teams and creates a schedule divided by rooms.<br>
+There are 3 teams in each room. The quiz length is figured at 20 min.  This was designed<br>
+to fit the layout of our regional Bible quizzing meets for the Church of God General Conference.
+</p>
+
+<h3>Reason for this project</h3>
+
+<p>
+The reason I created this was to auto generate a randomized schedule for our annual quiz meets, and<br>
+so I wouldn't have to do it by hand.  I also enjoy programming, so this allows me to polish my skills.
+</p>
+
+<h3>Requirements</h3>
+
+<p>
+<b>For Installing</b><br>
+You will need the Python (3.4)  and GTK (&gt;= 2.24) libraries and their dependencies (Pango, GLib). Your distro (Linux) should provide packages for these, usually installed by default.<br>
+ For Windows, you can download an installer from the website which bundles these libraries.  The Windows version marked "portable" includes everything.
+</p>
+
+<p>
+<b>Microsoft Excel</b><br>
+Although this program doesn't require  Excel to create the schedule, it does create it in Excel format (.xlsx).  You will need a program that can read this type of file to be able to open it.<br>
+Here are some free options if you don't already have Excel.   <a href="https://www.libreoffice.org/" title="LibreOffice -" class="https">LibreOffice -</a> You can read and write Excel docs,  <a href="https://www.microsoft.com/en-us/download/details.aspx?id=10" title="Microsoft Excel viewer" class="https">Microsoft Excel viewer</a> - You can view and print from the viewer, but you can't edit.
+</p>
+
+<p>
+<b>Adobe PDF</b> <br>
+As of version 1.1.0,  the program can generate the schedule in PDF format.   All you really need is one of the many pdf readers to print the schedule.   Excel is not needed to print a schedule. 
+</p>
+
+<br>
+<br>
+<br>
+
+
+
+			<br>
+			<span class="backlinks">
+			</span>
+
+			<hr class='pageseparator'/>
+			<h1>Main <a name='Main'></a></h1>
+
+			<h3>Buttons</h3>
+
+<p>
+The buttons along the bottom of the window control how you interface with the teams.<br>
+<img src="./docs_files/Main/Plus_Button.png">  Add teams to the list.  Max of 17 teams.<br>
+<img src="./docs_files/Main/Minus_Button.png"> Remove the selected team from the list<br>
+<img src="./docs_files/Main/Edit_Button.png">  Edit the selected team.<br>
+<img src="./docs_files/Main/xlsx_button.png"> This will generate the schedule in Microsoft Excel format.<br>
+<img src="./docs_files/Main/pdf_button.png"> This will generate the schedule in Adobe PDF format.
+</p>
+
+<h3>Menus</h3>
+
+<p>
+File &gt;&gt; Generate  As Excel = This will generate the schedule in Microsoft Excel format.<br>
+File &gt;&gt; Generate  As PDF = This will generate the schedule in Adobe PDF format.<br>
+File &gt;&gt; Settings = This opens the settings dialog.<br>
+File &gt;&gt; Exit = Close the program.
+</p>
+
+<p>
+Help &gt;&gt; Documentation = Opens this document.<br>
+Help &gt;&gt; About = Info about the program.
+</p>
+
+<p>
+<a href="./docs_files/Main/main.png"><img src="./docs_files/Main/main_400.png"></a>
+</p>
+
+
+			<br>
+			<span class="backlinks">
+			</span>
+
+			<hr class='pageseparator'/>
+			<h1>Schedule Generate <a name='Schedule Generate'></a></h1>
+
+			<p>
+When clicking either the  <img src="./docs_files/Main/xlsx_button.png"> <img src="./docs_files/Main/pdf_button.png">buttons or the "Generate As" from the file menu, you will be presented with a save dialog <br>
+that you can save the schedule as Excel or pdf format.  You can then choose a name and location for the schedule.  Once you click OK, a <br>
+summary of what the schedule will contain pops up.  Once you click OK on the summary dialog,  you can browse to the location where <br>
+you saved the file.  If the option "Open quiz schedule after creation"  is checked in the settings dialog, the file you just saved <br>
+will be opened in the default application for Excel or PDF files.
+</p>
+
+<br>
+
+<p>
+<a href="./docs_files/Schedule_Generate/generate.png"><img src="./docs_files/Schedule_Generate/generate_400 .png"></a>
+</p>
+
+<br>
+
+<p>
+The following is a sample schedule.  This screenshot was taken from a print preview screen.<br>
+This may not be exactly correct format wise but it is close.
+</p>
+
+<p>
+<a href="./docs_files/Schedule_Generate/schedule.png"><img src="./docs_files/Schedule_Generate/schedule_400.png"></a>
+</p>
+
+<p>
+The following  is a sample of the PDF format file. 
+</p>
+
+<p>
+<a href="./docs_files/Schedule_Generate/pdf_sch.png"><img src="./docs_files/Schedule_Generate/pdf_sch_400.png"></a>
+</p>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+			<br>
+			<span class="backlinks">
+			</span>
+
+			<hr class='pageseparator'/>
+			<h1>Settings <a name='Settings'></a></h1>
+
+			<h3>Open quiz schedule after creation</h3>
+
+<p>
+If checked,  the schedule will auto open in the default application that handles .xlsx or .pdf files after it is generated.  <br>
+Note: xlsx files are Microsoft Excel files.  If you don't have Excel,  you can download LibreOffice  or install the Excel viewer.  <br>
+You can download Adobe acrobat reader or any other application that will read pdf documents.
+</p>
+
+<h3>Show quiz schedule title</h3>
+
+<p>
+If checked,  you can put a text title to the schedule. 
+</p>
+
+<h3>Quiz Schedule title</h3>
+
+<p>
+The title text you want to show on the schedule.
+</p>
+
+<h3>Number of quizzes before lunch</h3>
+
+<p>
+This is the number of quizzes you want before lunch:   range is 4 to 7.
+</p>
+
+<h3>Number of quizzes after lunch</h3>
+
+<p>
+This is the number of quizzes you want after lunch:  range is 4 to 7.
+</p>
+
+<h3>Schedule start time</h3>
+
+<p>
+This is time the schedule will start.  You can choose from 09:30 or  09:40. 
+</p>
+
+<h3>Schedule lunch length</h3>
+
+<p>
+This is length of the lunch break.  You can choose from 40min or 60min. 
+</p>
+
+<br>
+
+<p>
+<a href="./docs_files/Settings/settings.png"><img src="./docs_files/Settings/settings_400.png"></a>
+</p>
+
+
+			<br>
+			<span class="backlinks">
+			</span>
+
+			
+		</div>
+	</div>
+</body>
+</html>
+
