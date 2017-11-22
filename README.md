@@ -6,11 +6,12 @@ Generates a bible quiz schedule. Takes the teams then randomizes the matches bet
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
-Prerequisites
+## Prerequisites
 
 Python3 and GTK 3 are required.  Linux users these are normally pre-installed. For Windows and Mac users you will have to download and install.
 
 Python = https://www.python.org/downloads/
+
 GTK =  https://www.gtk.org/download/
 
 
